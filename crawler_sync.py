@@ -20,8 +20,26 @@ def parser_link(response):
             if url_parser.scheme == "javascript" or url_parser.scheme == "" and url_parser.netloc == "":
                 continue
             if not link.startswith("http://") and not link.startswith("https://"):
-                link = "http://" + url_parser.netloc + url_parser.path + url_parser.params + url_parser.query + url_parser.fragment
+                link = _url_join(url_parser.scheme, url_parser.netloc,
+                                 url_parser.path, url_parser.params,
+                                 url_parser.query, url_parser.fragment)
             print(link)
+
+
+def _url_join(scheme, netloc, path, params, query, fragment):
+    """join url
+    :params scheme:
+    :params netloc:
+    :params path:
+    :params params:
+    :params query:
+    :params fragment:
+    :return: url
+    """
+    if scheme == "":
+        scheme = "http://"
+        return scheme + netloc + path + params + query + fragment
+    return scheme + "://" + netloc + path + params + query + fragment
 
 
 
